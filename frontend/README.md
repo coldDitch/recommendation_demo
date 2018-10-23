@@ -14,39 +14,39 @@ frontend
 	package.json
 
 	public
-	//icon for webpage and main html page
+	 icon for webpage and main html page
 	
 	src
-	//all relevant functionality
+	 all relevant functionality
 
 		api
-		//functionality for communicating with server
+		 functionality for communicating with server
 
 		assests
-		//files
+		 files
 
 		components
-		//small page components
+		 small page components
 
 		lang
-		//language packages
+		 language packages
 
 		lib
-		//helper functions
+		 helper functions
 
 		store
-		//functions for handling data
+		 functions for handling data
 
 		styles
-		//css
+		 css
 
 		unit_tests
-		//files for unit testing		
+		 files for unit testing		
 
 		views
-		//pages on website
+		 pages on website
 
 		index.js
-		//javascript file for rendering react		
+		 javascript file for rendering react		
 
 	yarn.lock
