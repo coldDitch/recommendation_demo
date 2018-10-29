@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
-import Home from '../components/Home.jsx'
-import Recommendations from '../components/Recommend.jsx'
-import Questions from '../components/Questions.jsx'
-import Rate from '../components/Rate.jsx'
+import Home from './Home.jsx'
+import Recommendations from './Recommend.jsx'
+import Questions from './Questions.jsx'
+import Rate from './Rate.jsx'
 class App extends Component {
   render() {
 	    return(
