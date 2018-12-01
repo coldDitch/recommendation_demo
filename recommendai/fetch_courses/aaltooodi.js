@@ -26,9 +26,14 @@ module.exports = class FetchAalto {
 			el.organization=course.opintokohde.vastuuorganisaationNimi
 			el.points=course.opintokohde.laajuusOp
 			el.university='Aalto'
-			el.open=course.opetustapahtumat[0].ilmoittautumiskelpoinen
-			el.webpage='https://oodi.aalto.fi/a/opintjakstied.jsp?OpinKohd='+course.opetustapahtumat[0].opetustapahtumaId+'&haettuOpas=-1'
 			el.code=course.opintokohde.opintokohteenTunniste
+			if(course.opetustapahtumat.length>0){
+				el.open=course.opetustapahtumat[0].ilmoittautumiskelpoinen
+				el.webpage='https://oodi.aalto.fi/a/opintjakstied.jsp?OpinKohd='+course.opetustapahtumat[0].opetustapahtumaId+'&haettuOpas=-1'
+			}
+			else {
+				el.open=false
+			}
 			this.info.data.push(el)
 			this.scrape_info(el.code,i)
 		}

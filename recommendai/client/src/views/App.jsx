@@ -6,13 +6,15 @@ import Recommendations from './Recommend.jsx'
 import Questions from './Questions.jsx'
 import Rate from './Rate.jsx'
 import Card from './Recommendation.jsx'
+import Navbar from '../components/Navigation.jsx'
 
 class App extends Component {
   render() {
 	    return(
 	 <Router>
 		<div>
-			<Route exact path="/" component={Home}/>
+		    	<Navbar />
+			<Route exact path="/" component={Card}/>
 			<Route path="/recommendations" component={Recommendations}/>
 			<Route path="/questions" component={Questions}/>
 			<Route path="/rate" component={Rate}/>

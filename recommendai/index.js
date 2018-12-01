@@ -5,6 +5,7 @@ const port = process.env.PORT || 5000;
 const FetchAalto= require('./fetch_courses/aaltooodi.js')
 
 const fetch=new FetchAalto()
+
 fetch.getData('CS-E3210')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
