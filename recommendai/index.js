@@ -1,22 +1,36 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
-const port = process.env.PORT || 5000;
+const express = require('express')
+const bodyParser = require('body-parser')
+const app = express()
+const router = express.Router()
+const port = process.env.PORT || 5000
 const FetchAalto= require('./fetch_courses/aaltooodi.js')
-
 const fetch=new FetchAalto()
+const mysql = require('mysql')
 
-fetch.getData('CS-E3210')
-app.use(bodyParser.json());
+const db = mysql.createConnection({
+    host : 'localhost',
+    user : 'root',
+    password : 'password',
+    database : 'aicore'
+})
+
+db.connect((err) => {
+    if(err){
+        throw err;
+    }
+    console.log('mysql connected')
+})
+
+fetch.getData('MS-E1462')
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 console.log(fetch.info)
 app.get('/api/recommend', (req,res) => {
-	res.send(fetch.info)
+	res.send(fetch.info)})
+app.get('/api/hello', (req, res) => {
+	res.send({ express: 'Hello From Express' })
 })
 
-app.get('/api/hello', (req, res) => {
-	res.send({ express: 'Hello From Express' });
-})
 app.post('/api/world', (req, res) => {
 	console.log(req.body)
 	res.send(
@@ -25,4 +39,3 @@ app.post('/api/world', (req, res) => {
 })
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
-

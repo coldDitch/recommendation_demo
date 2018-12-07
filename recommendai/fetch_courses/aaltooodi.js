@@ -37,7 +37,6 @@ module.exports = class FetchAalto {
 			this.info.data.push(el)
 			this.scrape_info(el.code,i)
 		}
-	console.log(this.info)
 	}
 
 	scrape_info(code,index) {
@@ -45,12 +44,13 @@ module.exports = class FetchAalto {
 		Request.get('https://courses.aalto.fi/course/'+code,
 			(err,res,body) => {
 				if(err){
+                    console.log('error finding course '+code+' from courses')
 					return ""
 				}
 				const $ = cheerio.load(body)
 				const description=$('.typography__P-kooxu7-4')
 				this.info.data[index].description=description.text()
-				return description.text()
+				console.log(this.info.data[index])
 			})
 
 	}
