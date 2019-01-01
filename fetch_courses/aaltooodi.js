@@ -1,11 +1,13 @@
 const Request = require('request')
 const cheerio = require('cheerio')
 
+//module export class
 module.exports = class FetchAalto {
 	constructor() {
 		this.info={data:[]}
 	}
 
+//requests data and passes it to parse()
 	getData(course){
 		Request.get('https://oodi.aalto.fi/a/api/public/opetushaku/hae?nimiTaiTunniste='+course,
 			(err,res,body) => {
@@ -17,7 +19,7 @@ module.exports = class FetchAalto {
 				return true
 			})
 	}
-
+//saves all pulled courses to info
 	parse(data){
 		for(let i in data){
 			const el={}
@@ -38,7 +40,7 @@ module.exports = class FetchAalto {
 			this.scrape_info(el.code,i)
 		}
 	}
-
+//scrapes description from courses
 	scrape_info(code,index) {
 		//TODO try to not DOS
 		Request.get('https://courses.aalto.fi/course/'+code,
