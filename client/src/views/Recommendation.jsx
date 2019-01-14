@@ -62,9 +62,9 @@ export default class Card extends React.Component {
 		.then(res => {
 			console.log(res)
 			this.setState({
-				name: res.data[0].name,
-				university:res.data[0].university,
-				description:res.data[0].description})})
+				name: res[0].name,
+				university:res[0].university,
+				description:res[0].description})})
 		.catch(err => console.log(err));
 	}
 	render() {

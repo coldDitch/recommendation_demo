@@ -4,23 +4,23 @@ const cheerio = require('cheerio')
 //module export class
 module.exports = class FetchAalto {
 	constructor() {
-		this.info={data:[]}
+		this.info=[]
 	}
 
 //requests data and passes it to parse()
-	getData(course){
+	getData(course,callback){
 		Request.get('https://oodi.aalto.fi/a/api/public/opetushaku/hae?nimiTaiTunniste='+course,
-			(err,res,body) => {
+			async (err,res,body) => {
 				if(err){
 					return false
 				}
 				const data=JSON.parse(body)
-				this.parse(data)
+				this.parse(data,callback)
 				return true
 			})
 	}
 //saves all pulled courses to info
-	parse(data){
+	parse(data,callback){
 		for(let i in data){
 			const el={}
 			const course=data[i]
@@ -28,7 +28,7 @@ module.exports = class FetchAalto {
 			el.organization=course.opintokohde.vastuuorganisaationNimi
 			el.points=course.opintokohde.laajuusOp
 			el.university='Aalto'
-			el.code=course.opintokohde.opintokohteenTunniste
+			el.data=course.opintokohde.opintokohteenTunniste
 			if(course.opetustapahtumat.length>0){
 				el.open=course.opetustapahtumat[0].ilmoittautumiskelpoinen
 				el.webpage='https://oodi.aalto.fi/a/opintjakstied.jsp?OpinKohd='+course.opetustapahtumat[0].opetustapahtumaId+'&haettuOpas=-1'
@@ -36,25 +36,25 @@ module.exports = class FetchAalto {
 			else {
 				el.open=false
 			}
-			this.info.data.push(el)
-			this.scrape_info(el.code,i)
+			this.scrape_info(el,callback)
 		}
 	}
 //scrapes description from courses
-	scrape_info(code,index) {
-		//TODO try to not DOS
-		Request.get('https://courses.aalto.fi/course/'+code,
+	scrape_info(data,callback) {
+		setTimeout(()=>	{	
+			Request.get('https://courses.aalto.fi/course/'+data.data,
 			(err,res,body) => {
 				if(err){
-                    console.log('error finding course '+code+' from courses')
-					return ""
+					console.log('error finding course '+data+' from courses')
 				}
 				const $ = cheerio.load(body)
-				const description=$('.typography__P-kooxu7-4')
-				this.info.data[index].description=description.text()
-				console.log(this.info.data[index])
+				const description = $('.typography__P-kooxu7-4')
+				data.description = description.text()
+				console.log(data)	
+				this.info.push(data)
+				callback(data)
+				console.log("Doned")
 			})
-
+		},10)
 	}
 }
-
